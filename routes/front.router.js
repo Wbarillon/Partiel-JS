@@ -20,10 +20,10 @@ Class definition
     routes(){
         /* 
         Route to display the home page
-        - To send data to the route, juste add an object has second param
+        - To send data to the route, juste add an object has second param   connectedUser: 'undefined',
         */
           classRouter.get( '/', (req, res) => {
-            res.render('index', { connectedUser: 'undefined', userCollection: userCollection })
+            res.render('index', { userCollection: userCollection })
           });
         //
 
@@ -31,12 +31,22 @@ Class definition
         Route to connect a user
         - Make 2 const to get email and password from the request
         - Make a loop on the const 'userCollection'
-        - Check if yoou find the email
+        - Check if you find the email
         - Check if the password is correct
         - Send back the correct page
         */
           classRouter.get( '/login', (req, res) => {
-              
+           
+              //const userEmail = JSON.parse( json(req.body), ('userEmail', `${userEmail}`));
+              const userPassword = req.text;
+                
+              for (let i = 0; i < userCollection.length; i++) {
+                if (userCollection[4] === userEmail) {
+                  console.log('je sais pas ?');
+                }
+              }
+            
+              res.render('login')
           });
         //
 
@@ -47,7 +57,7 @@ Class definition
         - Send back the correct page with the data
         */
           classRouter.get( '/me', (req, res) => {
-              
+              res.render('me')
           });
         //
 
@@ -76,5 +86,5 @@ Class definition
 Export class
 !! Don't edit this code unless you are sure of what you do !!
 */
-    module.exports = RouterClass;
+    module.exports = RouterClass; //To server.js l.54
 //

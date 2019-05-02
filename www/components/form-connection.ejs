@@ -1,0 +1,110 @@
+<form action="#">
+
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" required minlength="6" value="selenacraig@boink.com">
+    <div id="passwordInputs">
+        <label type="password">Mot de passe</label>
+        <input type="password" name="password" id="password" required minlength="9" value="5cc311424d0ea53891d0fc22">
+
+        <label type="password-confirmation">Répéter le mot de passe</label>
+        <input type="password" name="password-confirmation" id="password-confirmation" value="5cc311424d0ea53891d0fc22">
+    </div>
+    <button type="submit">Connexion</button>
+</form>
+
+<p style="color: red" id="errorMessage"></p>
+    
+<script>
+
+// Variables declaration
+let connectionForm;
+let userEmail;
+let userPassword;
+let confirmPassword;
+let passwordInputs;
+let errorMessage;
+
+
+// Script waiting for DOM loading
+document.addEventListener('DOMContentLoaded', () => {
+
+    // Variables affectation
+    main = document.querySelector('main');
+    connectionForm = document.querySelector('form');
+    userEmail = document.querySelector('[name="email"]');
+    userPassword = document.querySelector('[name="password"]');
+    confirmPassword = document.querySelector('[name="password-confirmation"]');
+    passwordInputs = document.querySelector('#passwordInputs');
+    errorMessage = document.querySelector('#errorMessage');
+    activateForm();
+});
+
+const activateForm = () => {
+
+    // Removing errorMessage once user interact with form in case of an error (focus doesn't work)
+    passwordInputs.addEventListener('click', (event) => {
+        errorMessage.innerHTML = '';
+    });
+
+    // Listening to form submission
+    connectionForm.addEventListener('submit', (event) => {
+
+        //  Preventing default behavior of the submission
+        event.preventDefault();
+
+        let formError = 0;
+
+        /* 
+        Checking form :
+            -   length of email (6 minimum)
+            -   length of password (9 minimum)
+            -   if password matchs password-confirmation
+        */
+        if (userEmail.value.length <= 5) {
+            formError++;
+        };
+        if (userPassword.value.length <= 8) {
+            formError++;
+        };
+        if (confirmPassword.value != userPassword.value) {
+            formError++;
+        };
+
+        // Final validation
+        if (formError === 0) {
+
+            /*
+            Saving cookie featuring :
+                -   user-email
+                -   user-password
+
+                Pour cette partie, j'ai eu besoin de cette documentation :
+                https://blog.logrocket.com/the-complete-guide-to-using-localstorage-in-javascript-apps-ba44edb53a36
+            */
+            localStorage.setItem('user-email', `${userEmail.value}`);
+            localStorage.setItem('user-password', `${userPassword.value}`);
+
+            // Sending user's data to server
+            fetch('/api', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userEmail: localStorage.getItem('user-email'),
+                    userPassword: localStorage.getItem('user-password')
+                })
+            })
+            .then( response => response.json() )
+            .then( json => console.log(json) )
+            .catch( error => console.error(error) );
+        }
+        else {
+
+            // Displaying message indicating what might have gone wrong with user experience
+            errorMessage.innerHTML = "Les deux mots de passe ne correspondent pas. Veuillez rééssayez.";
+        };
+    });
+};
+</script>

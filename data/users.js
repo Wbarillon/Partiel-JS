@@ -1,3 +1,5 @@
+// Exportation of "database" to front.router
+
 module.exports = [
     {
       "_id": "5cc31142b635e8c4edf5018c",

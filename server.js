@@ -5,6 +5,7 @@ Import
     const express = require('express');
     const ejs = require('ejs');
 
+
     /* 
     You need to import the module to use the data from the body of a request and client vue folder
     - https://www.npmjs.com/package/body-parser
@@ -13,6 +14,7 @@ Import
         //=> Start coding here...
         const bodyParser = require('body-parser');
         const path = require('path');
+        const mongoDB = require('./services/db.connect');
     //
 //
 
@@ -67,8 +69,14 @@ Config
         !! Don't edit this code unless you are sure of what you do !!
         */
             launch(){
-                server.listen(port, () => console.log({ server: `http://localhost:${port}` }));
-            };
+                // Connect MongoDB
+                mongoDB.initClient()
+                .then(mongooseResponse => {
+                // Launch server
+                server.listen(port, () => console.log({database: mongooseResponse, server: `http://localhost:${port}` }))
+                })
+                .catch(mongooseError => console.log(mongooseError));
+            }
         //
     };
 //
