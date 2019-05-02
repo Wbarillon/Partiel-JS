@@ -37,15 +37,20 @@ Class definition
         */
           classRouter.get( '/login', (req, res) => {
            
-              //const userEmail = JSON.parse( json(req.body), ('userEmail', `${userEmail}`));
+              const userEmail = req.body.userEmail;
+              console.log(userEmail);
               const userPassword = req.text;
-                
+              console.log(userPassword);
+                           
               for (let i = 0; i < userCollection.length; i++) {
-                if (userCollection[4] === userEmail) {
-                  console.log('je sais pas ?');
+                if (userCollection[i].email == userEmail) {
+                  console.log('mmmh');
+                }
+                else {
+                  console.log(userCollection[i].email);
                 }
               }
-            
+              
               res.render('login')
           });
         //
@@ -65,6 +70,9 @@ Class definition
         Route test API
         */
           classRouter.post( '/api', (req, res) => {
+            console.log('Les données arrivent sur l\'api');
+            console.log(req.body.userEmail);
+            console.log(req.body.userPassword);
             return res.json(req.body)
           });
         //
