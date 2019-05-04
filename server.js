@@ -34,7 +34,7 @@ Config
         init(){
 
             /* 
-            You need to connfigure the module to use the data from the body of a request
+            You need to configure the module to use the data from the body of a request
             https://www.npmjs.com/package/body-parser
             */
                 //=> Start coding here...

@@ -36,7 +36,8 @@ Class definition
         - Send back the correct page
         */
           classRouter.get( '/login', (req, res) => {
-              console.log(req.body);
+              console.log('que se passe-t-il côté login ?')
+              console.log(req.body);                          // c'est vide
               const userEmail = req.body.userEmail;
               console.log(userEmail);
               const userPassword = req.body.userPassword;
