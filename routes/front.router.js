@@ -36,18 +36,17 @@ Class definition
         - Send back the correct page
         */
           classRouter.get( '/login', (req, res) => {
-           
+              console.log(req.body);
               const userEmail = req.body.userEmail;
               console.log(userEmail);
-              const userPassword = req.text;
+              const userPassword = req.body.userPassword;
               console.log(userPassword);
                            
               for (let i = 0; i < userCollection.length; i++) {
-                if (userCollection[i].email == userEmail) {
+                if (userCollection[i].email == userEmail
+                    &&
+                    userCollection[i].password == userPassword) {
                   console.log('mmmh');
-                }
-                else {
-                  console.log(userCollection[i].email);
                 }
               }
               

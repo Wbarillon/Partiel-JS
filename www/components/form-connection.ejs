@@ -2,6 +2,7 @@
 
     <label for="email">Email</label>
     <input type="email" name="email" id="email" required minlength="6" value="selenacraig@boink.com">
+
     <div id="passwordInputs">
         <label type="password">Mot de passe</label>
         <input type="password" name="password" id="password" required minlength="9" value="5cc311424d0ea53891d0fc22">
@@ -9,7 +10,9 @@
         <label type="password-confirmation">Répéter le mot de passe</label>
         <input type="password" name="password-confirmation" id="password-confirmation" value="5cc311424d0ea53891d0fc22">
     </div>
+
     <button type="submit">Connexion</button>
+
 </form>
 
 <p style="color: red" id="errorMessage"></p>
@@ -29,7 +32,6 @@ let errorMessage;
 document.addEventListener('DOMContentLoaded', () => {
 
     // Variables affectation
-    main = document.querySelector('main');
     connectionForm = document.querySelector('form');
     userEmail = document.querySelector('[name="email"]');
     userPassword = document.querySelector('[name="password"]');
