@@ -1,14 +1,14 @@
-<form action="#">
+<form method="POST">
 
     <label for="email">Email</label>
-    <input type="email" name="email" id="email" required minlength="6" value="selenacraig@boink.com">
+    <input type="email" name="userEmail" id="email" required minlength="6" value="vazquezsantos@boink.com">
 
     <div id="passwordInputs">
         <label type="password">Mot de passe</label>
-        <input type="password" name="password" id="password" required minlength="9" value="5cc311424d0ea53891d0fc22">
+        <input type="password" name="userPassword" id="password" required minlength="9" value="5cc31142dedf6177ce7083b3">
 
         <label type="password-confirmation">Répéter le mot de passe</label>
-        <input type="password" name="password-confirmation" id="password-confirmation" value="5cc311424d0ea53891d0fc22">
+        <input type="password" name="password-confirmation" id="password-confirmation" value="5cc31142dedf6177ce7083b3">
     </div>
 
     <button type="submit">Connexion</button>
@@ -33,8 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Variables affectation
     connectionForm = document.querySelector('form');
-    userEmail = document.querySelector('[name="email"]');
-    userPassword = document.querySelector('[name="password"]');
+    userEmail = document.querySelector('[name="userEmail"]');
+    userPassword = document.querySelector('[name="userPassword"]');
     confirmPassword = document.querySelector('[name="password-confirmation"]');
     passwordInputs = document.querySelector('#passwordInputs');
     errorMessage = document.querySelector('#errorMessage');
@@ -52,7 +52,7 @@ const activateForm = () => {
     connectionForm.addEventListener('submit', (event) => {
 
         //  Preventing default behavior of the submission
-        event.preventDefault();
+        //event.preventDefault();
 
         let formError = 0;
 
@@ -86,8 +86,9 @@ const activateForm = () => {
             localStorage.setItem('user-email', `${userEmail.value}`);
             localStorage.setItem('user-password', `${userPassword.value}`);
 
+            /*
             // Sending user's data to server
-            fetch('/api', {
+            fetch('/login', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -101,9 +102,11 @@ const activateForm = () => {
             .then( response => response.json() )
             .then( json => console.log(json) )
             .catch( error => console.error(error) );
+            */
         }
         else {
-
+            
+            event.preventDefault();
             // Displaying message indicating what might have gone wrong with user experience
             errorMessage.innerHTML = "Les deux mots de passe ne correspondent pas. Veuillez rééssayez.";
         };

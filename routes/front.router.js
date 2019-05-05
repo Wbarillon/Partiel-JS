@@ -20,10 +20,10 @@ Class definition
     routes(){
         /* 
         Route to display the home page
-        - To send data to the route, juste add an object has second param   connectedUser: 'undefined',
+        - To send data to the route, juste add an object has second param   
         */
           classRouter.get( '/', (req, res) => {
-            res.render('index', { userCollection: userCollection })
+            res.render('index', { connectedUser: 'undefined', userCollection: userCollection })
           });
         //
 
@@ -36,21 +36,6 @@ Class definition
         - Send back the correct page
         */
           classRouter.get( '/login', (req, res) => {
-              console.log('que se passe-t-il côté login ?')
-              console.log(req.body);                          // c'est vide
-              const userEmail = req.body.userEmail;
-              console.log(userEmail);
-              const userPassword = req.body.userPassword;
-              console.log(userPassword);
-                           
-              for (let i = 0; i < userCollection.length; i++) {
-                if (userCollection[i].email == userEmail
-                    &&
-                    userCollection[i].password == userPassword) {
-                  console.log('mmmh');
-                }
-              }
-              
               res.render('login')
           });
         //
@@ -69,13 +54,30 @@ Class definition
         /* 
         Route test API
         */
-          classRouter.post( '/api', (req, res) => {
-            console.log('Les données arrivent sur l\'api');
-            console.log(req.body.userEmail);
-            console.log(req.body.userPassword);
+          classRouter.post( '/api', (req, res, next) => {
             return res.json(req.body)
           });
         //
+
+        classRouter.post('/login', (req,res) => {
+
+          let connection = 0;
+
+          const userEmail = req.body.userEmail;
+          const userPassword = req.body.userPassword;
+                       
+          for (let i = 0; i < userCollection.length; i++) {
+            if (userCollection[i].email == userEmail
+                &&
+                userCollection[i].password == userPassword) {
+              connection = 1; 
+              res.redirect('/me');
+            }
+          }
+          if (connection == 0) {
+            res.render('login')
+          }
+        });
     };
 
     /* 
@@ -94,5 +96,5 @@ Class definition
 Export class
 !! Don't edit this code unless you are sure of what you do !!
 */
-    module.exports = RouterClass; //To server.js l.54
+    module.exports = RouterClass;     //To server.js l.54
 //
