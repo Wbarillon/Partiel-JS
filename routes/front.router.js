@@ -6,6 +6,8 @@ Imports & configuration
   const express = require('express');
   const classRouter = express.Router({ mergeParams: true });
   const userCollection = require('../data/users');
+  let connectedUser = false;
+  let userData = '';
 // 
 
 
@@ -20,10 +22,10 @@ Class definition
     routes(){
         /* 
         Route to display the home page
-        - To send data to the route, juste add an object has second param   
+        - To send data to the route, juste add an object has second param     connectedUser: 'undefined',
         */
           classRouter.get( '/', (req, res) => {
-            res.render('index', { connectedUser: 'undefined', userCollection: userCollection })
+            res.render('index', { connectedUser: connectedUser, userCollection: userCollection })
           });
         //
 
@@ -36,7 +38,7 @@ Class definition
         - Send back the correct page
         */
           classRouter.get( '/login', (req, res) => {
-              res.render('login')
+              res.render('login', {connectedUser: false})
           });
         //
 
@@ -47,14 +49,14 @@ Class definition
         - Send back the correct page with the data
         */
           classRouter.get( '/me', (req, res) => {
-              res.render('me')
+                res.render('me', {connectedUser: true, userData: userData})
           });
         //
 
         /* 
         Route test API
         */
-          classRouter.post( '/api', (req, res, next) => {
+          classRouter.post( '/api', (req, res) => {
             return res.json(req.body)
           });
         //
@@ -70,13 +72,19 @@ Class definition
             if (userCollection[i].email == userEmail
                 &&
                 userCollection[i].password == userPassword) {
-              connection = 1; 
+              userData = userCollection.find(user => user.email === userEmail)
+              connection = 1;
+              connectedUser = true;
               res.redirect('/me');
             }
           }
           if (connection == 0) {
             res.render('login')
           }
+        });
+        classRouter.post('/me', (req, res) => {
+          connectedUser = false;
+          res.redirect('/')
         });
     };
 

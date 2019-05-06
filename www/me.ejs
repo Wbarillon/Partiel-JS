@@ -12,6 +12,30 @@
             </nav>
         </header>
         <main>
+            <ul>
+                    <li><%= userData.name %></li>
+                    <li><%= userData.age %></li>
+                    <li><%= userData.gender %></li>
+                    <li><%= userData.phone %></li>
+                    <li><%= userData.address %></li>
+            </ul>
+            <form method="POST">
+                <button type="submit">Déconnexion</button>
+            </form>
         </main>
     </body>
+    <script>
+
+        let disconnectionForm;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            disconnectionForm = document.querySelector('form');
+            disconnect();
+        });
+
+        const disconnect = () => {
+            disconnectionForm.addEventListener('submit', (event) => {
+            })
+        }
+    </script>
 </html>
